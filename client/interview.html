@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CareerCopilot AI | Mock Interview</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a href="index.html" class="logo">CareerCopilot AI</a>
+    <div style="display: flex; align-items: center; gap: 20px;">
+      <span class="badge badge-success">Readiness: 74%</span>
+      <nav class="nav-links">
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-container" style="max-width: 720px;">
+
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
+      <h1 style="color: var(--color-navy); font-size: 22px;">Question 3 of 5</h1>
+      <span style="color: var(--color-primary); font-size: 18px; letter-spacing: 4px;">●●●○○</span>
+    </div>
+
+    <!-- Question Card -->
+    <div class="card" style="margin-bottom: 20px;">
+      <p style="font-size: 17px; color: var(--color-text); font-style: italic;">
+        "Walk me through how you'd handle a dataset with duplicate records."
+      </p>
+    </div>
+
+    <!-- Answer Box -->
+    <div class="stack" style="margin-bottom: 24px;">
+      <textarea class="input-select" placeholder="Type your answer here...">I'd first check how many records are duplicated, then decide whether to drop them or investigate why they occurred before removing anything.</textarea>
+      <div style="text-align: right;">
+        <button class="btn-primary" type="button">Submit Answer</button>
+      </div>
+    </div>
+
+    <!-- Feedback Section -->
+    <section class="card" style="margin-bottom: 24px;">
+      <h2 style="color: var(--color-navy); font-size: 16px; margin-bottom: 16px;">Feedback</h2>
+
+      <div style="margin-bottom: 14px;">
+        <span class="badge badge-success" style="margin-bottom: 6px;">✓ Strengths</span>
+        <p style="color: var(--color-text); font-size: 14px; margin-top: 6px;">
+          Shows a logical, methodical approach to identifying duplicates before acting.
+        </p>
+      </div>
+
+      <div style="margin-bottom: 14px;">
+        <span class="badge badge-warning" style="margin-bottom: 6px;">→ Improve</span>
+        <p style="color: var(--color-text); font-size: 14px; margin-top: 6px;">
+          Could mention specific tools or methods, like pandas' <code>drop_duplicates()</code> or checking a unique key.
+        </p>
+      </div>
+
+      <div>
+        <span class="badge" style="background: #E0E7FF; color: #4338CA; margin-bottom: 6px;">★ Stronger Example</span>
+        <p style="color: var(--color-text); font-size: 14px; margin-top: 6px;">
+          I'd use <code>df.duplicated()</code> to quantify duplicates, inspect a sample to confirm they're true duplicates
+          rather than legitimate repeats, then apply <code>drop_duplicates()</code> or flag them for review depending on context.
+        </p>
+      </div>
+    </section>
+
+    <div style="text-align: center;">
+      <a href="dashboard.html" class="btn-primary">Next Question →</a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    CareerCopilot AI — Day 3 static build
+  </footer>
+</body>
+</html>

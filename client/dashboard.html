@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CareerCopilot AI | Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a href="index.html" class="logo">CareerCopilot AI</a>
+    <nav class="nav-links">
+      <a href="role-select.html" class="nav-link">New Interview</a>
+    </nav>
+  </header>
+
+  <main class="page-container">
+    <h1 style="color: var(--color-navy); font-size: 28px; margin-bottom: 24px;">
+      Your Progress
+    </h1>
+
+    <!-- Summary Cards -->
+    <div class="grid-2col" style="margin-bottom: 32px;">
+
+      <div class="card">
+        <h3 style="color: var(--color-muted); font-size: 14px; margin-bottom: 8px;">Readiness Score</h3>
+        <p style="font-size: 36px; font-weight: 700; color: var(--color-navy);">78%</p>
+        <p style="color: var(--color-muted); font-size: 13px; margin-top: 4px;">avg, 3 sessions</p>
+      </div>
+
+      <div class="card">
+        <h3 style="color: var(--color-muted); font-size: 14px; margin-bottom: 8px;">Learning Progress</h3>
+        <p style="color: var(--color-text); font-size: 15px; margin-bottom: 10px;">AI/ML Engineer Intern</p>
+        <div class="progress-bar" style="margin-bottom: 8px;">
+          <div class="progress-bar-fill" style="width: 60%;"></div>
+        </div>
+        <p style="color: var(--color-muted); font-size: 13px;">6 of 10 milestones complete</p>
+      </div>
+
+    </div>
+
+    <!-- Interview History -->
+    <section style="margin-bottom: 32px;">
+      <h2 style="color: var(--color-navy); font-size: 18px; margin-bottom: 12px;">Interview History</h2>
+      <div class="card" style="padding: 0; overflow: hidden;">
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="background: var(--color-bg); text-align: left;">
+              <th style="padding: 12px 20px; font-size: 13px; color: var(--color-muted);">Date</th>
+              <th style="padding: 12px 20px; font-size: 13px; color: var(--color-muted);">Role</th>
+              <th style="padding: 12px 20px; font-size: 13px; color: var(--color-muted);">Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-top: 1px solid var(--color-border);">
+              <td style="padding: 14px 20px; font-size: 14px;">Aug 7</td>
+              <td style="padding: 14px 20px; font-size: 14px;">AI/ML Engineer Intern</td>
+              <td style="padding: 14px 20px;"><span class="badge badge-success">82%</span></td>
+            </tr>
+            <tr style="border-top: 1px solid var(--color-border);">
+              <td style="padding: 14px 20px; font-size: 14px;">Aug 6</td>
+              <td style="padding: 14px 20px; font-size: 14px;">Data Analyst</td>
+              <td style="padding: 14px 20px;"><span class="badge badge-warning">64%</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <div style="display: flex; gap: 16px; justify-content: center;">
+      <a href="role-select.html" class="btn-primary">Start New Interview</a>
+      <a href="roadmap.html" class="btn-secondary">View Roadmap</a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    CareerCopilot AI — Day 3 static build
+  </footer>
+</body>
+</html>
