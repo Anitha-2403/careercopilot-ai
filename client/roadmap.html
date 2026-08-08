@@ -16,88 +16,40 @@
 
   <main class="page-container">
     <h1 style="color: var(--color-navy); font-size: 28px; margin-bottom: 24px;">
-      Your Roadmap: AI/ML Engineer Intern
+      Your Roadmap: <span id="roadmap-role-name">...</span>
     </h1>
 
-    <!-- Core Skills -->
-    <section style="margin-bottom: 32px;">
-      <h2 style="color: var(--color-navy); font-size: 18px; margin-bottom: 12px;">Core Skills</h2>
-      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-        <span class="badge badge-success">Python</span>
-        <span class="badge badge-success">ML Fundamentals</span>
-        <span class="badge badge-success">SQL</span>
-        <span class="badge badge-success">Model Evaluation</span>
-        <span class="badge badge-success">Deployment Basics</span>
+    <p id="roadmap-loading" style="color: var(--color-muted);">Generating your personalized roadmap...</p>
+    <p id="roadmap-error" style="color: var(--color-danger); display: none;"></p>
+
+    <div id="roadmap-content" style="display: none;">
+
+      <section style="margin-bottom: 32px;">
+        <h2 style="color: var(--color-navy); font-size: 18px; margin-bottom: 12px;">Core Skills</h2>
+        <div id="core-skills" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
+      </section>
+
+      <section style="margin-bottom: 32px;">
+        <h2 style="color: var(--color-navy); font-size: 18px; margin-bottom: 12px;">Learning Sequence</h2>
+        <div id="learning-sequence" class="stack"></div>
+      </section>
+
+      <section style="margin-bottom: 32px;">
+        <h2 style="color: var(--color-navy); font-size: 18px; margin-bottom: 12px;">Recommended Resources</h2>
+        <div id="resources" class="grid-2col"></div>
+      </section>
+
+      <div style="text-align: center;">
+        <a href="interview.html" class="btn-primary">Start Mock Interview →</a>
       </div>
-    </section>
 
-    <!-- Learning Sequence -->
-    <section style="margin-bottom: 32px;">
-      <h2 style="color: var(--color-navy); font-size: 18px; margin-bottom: 12px;">Learning Sequence</h2>
-      <div class="stack">
-
-        <div class="card" style="display: flex; align-items: center; gap: 12px;">
-          <input type="checkbox" checked disabled style="width: 18px; height: 18px;" />
-          <div>
-            <strong style="color: var(--color-text);">1. Python &amp; data handling</strong>
-            <p style="color: var(--color-muted); font-size: 14px; margin-top: 4px;">
-              Master pandas, numpy, and clean data workflows.
-            </p>
-          </div>
-        </div>
-
-        <div class="card" style="display: flex; align-items: center; gap: 12px;">
-          <input type="checkbox" disabled style="width: 18px; height: 18px;" />
-          <div>
-            <strong style="color: var(--color-text);">2. Core ML concepts</strong>
-            <p style="color: var(--color-muted); font-size: 14px; margin-top: 4px;">
-              Supervised/unsupervised learning, overfitting, evaluation metrics.
-            </p>
-          </div>
-        </div>
-
-        <div class="card" style="display: flex; align-items: center; gap: 12px;">
-          <input type="checkbox" disabled style="width: 18px; height: 18px;" />
-          <div>
-            <strong style="color: var(--color-text);">3. Model evaluation</strong>
-            <p style="color: var(--color-muted); font-size: 14px; margin-top: 4px;">
-              Precision, recall, F1, cross-validation, and choosing the right metric.
-            </p>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Recommended Resources -->
-    <section style="margin-bottom: 32px;">
-      <h2 style="color: var(--color-navy); font-size: 18px; margin-bottom: 12px;">Recommended Resources</h2>
-      <div class="grid-2col">
-
-        <div class="card">
-          <strong style="color: var(--color-navy);">Scikit-learn Documentation</strong>
-          <p style="color: var(--color-muted); font-size: 14px; margin-top: 6px;">
-            Official reference for classical ML algorithms.
-          </p>
-        </div>
-
-        <div class="card">
-          <strong style="color: var(--color-navy);">Kaggle Micro-courses</strong>
-          <p style="color: var(--color-muted); font-size: 14px; margin-top: 6px;">
-            Short, hands-on lessons covering practical ML workflows.
-          </p>
-        </div>
-
-      </div>
-    </section>
-
-    <div style="text-align: center;">
-      <a href="interview.html" class="btn-primary">Start Mock Interview →</a>
     </div>
   </main>
 
   <footer class="site-footer">
-    CareerCopilot AI — Day 3 static build
+    CareerCopilot AI — Day 4 build
   </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>

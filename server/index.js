@@ -10,15 +10,19 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors()); // allows the frontend (different origin) to call this API
-app.use(express.json()); // parses incoming JSON request bodies
+app.use(cors());
+app.use(express.json());
 
-// Health check route — confirms the server is alive
+// Health check route
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
-// Temporary test route to confirm Gemini API connection works
+// Feature routes
+const roadmapRouter = require("./routes/roadmap");
+app.use("/api", roadmapRouter);
+
+// Temporary Gemini test route (from Day 3 — kept for now, removed Day 6)
 const testGeminiRouter = require("./routes/testGemini");
 app.use("/api", testGeminiRouter);
 
