@@ -33,12 +33,12 @@ function setJSON(key, value) {
 }
 
 // ==========================================================================
-// PAGE: index.html — backend health check (Day 3, unchanged)
+// PAGE: index.html — backend health check
 // ==========================================================================
 
 async function checkBackendHealth() {
   const statusEl = document.getElementById("backend-status");
-  if (!statusEl) return; // not on this page
+  if (!statusEl) return;
 
   try {
     const response = await fetch(`${BACKEND_URL}/api/health`);
@@ -59,17 +59,13 @@ checkBackendHealth();
 function initRoleSelect() {
   const roleCards = document.querySelectorAll(".role-card");
   const continueBtn = document.getElementById("continue-btn");
-  if (!roleCards.length || !continueBtn) return; // not on this page
+  if (!roleCards.length || !continueBtn) return;
 
   let selectedRole = getJSON("cc_selected_role", null);
 
   function renderSelection() {
     roleCards.forEach((card) => {
-      if (card.dataset.role === selectedRole) {
-        card.classList.add("role-card-selected");
-      } else {
-        card.classList.remove("role-card-selected");
-      }
+      card.classList.toggle("role-card-selected", card.dataset.role === selectedRole);
     });
     continueBtn.classList.toggle("btn-disabled", !selectedRole);
   }
@@ -87,10 +83,10 @@ function initRoleSelect() {
       return;
     }
     setJSON("cc_selected_role", selectedRole);
+    // Starting a new role means starting a fresh roadmap/interview cycle for it.
     const prefs = getJSON("cc_user_preferences", {});
     prefs.lastViewedRole = selectedRole;
     setJSON("cc_user_preferences", prefs);
-    // navigation happens via the href on continueBtn
   });
 
   renderSelection();
@@ -107,7 +103,7 @@ async function initRoadmap() {
   const loadingEl = document.getElementById("roadmap-loading");
   const errorEl = document.getElementById("roadmap-error");
   const contentEl = document.getElementById("roadmap-content");
-  if (!roleNameEl) return; // not on this page
+  if (!roleNameEl) return;
 
   const role = getJSON("cc_selected_role", null);
 
@@ -120,7 +116,6 @@ async function initRoadmap() {
 
   roleNameEl.textContent = role;
 
-  // Check cache first
   let roadmap = getJSON(`cc_roadmap_data_${role}`, null);
 
   if (!roadmap) {
@@ -153,7 +148,6 @@ async function initRoadmap() {
 }
 
 function renderRoadmap(role, roadmap) {
-  // Core Skills
   const skillsEl = document.getElementById("core-skills");
   skillsEl.innerHTML = "";
   roadmap.coreSkills.forEach((skill) => {
@@ -163,7 +157,6 @@ function renderRoadmap(role, roadmap) {
     skillsEl.appendChild(span);
   });
 
-  // Learning Sequence (with progress tracking)
   const progress = getJSON(`cc_roadmap_progress_${role}`, {
     completedSteps: [],
     totalSteps: roadmap.learningSequence.length,
@@ -200,10 +193,8 @@ function renderRoadmap(role, roadmap) {
     sequenceEl.appendChild(card);
   });
 
-  // Ensure a progress record exists even if user checks nothing
   setJSON(`cc_roadmap_progress_${role}`, progress);
 
-  // Resources
   const resourcesEl = document.getElementById("resources");
   resourcesEl.innerHTML = "";
   roadmap.resources.forEach((res) => {
@@ -216,3 +207,203 @@ function renderRoadmap(role, roadmap) {
 }
 
 initRoadmap();
+
+// ==========================================================================
+// PAGE: interview.html — conversational mock interview state machine
+// ==========================================================================
+
+function initInterview() {
+  const loadingEl = document.getElementById("interview-loading");
+  const errorEl = document.getElementById("interview-error");
+  const activeEl = document.getElementById("interview-active");
+  const summaryEl = document.getElementById("interview-summary");
+  if (!loadingEl || !activeEl) return; // not on this page
+
+  const readinessBadge = document.getElementById("readiness-badge");
+  const questionCounter = document.getElementById("question-counter");
+  const progressDots = document.getElementById("progress-dots");
+  const questionText = document.getElementById("question-text");
+  const answerInput = document.getElementById("answer-input");
+  const submitBtn = document.getElementById("submit-answer-btn");
+  const feedbackSection = document.getElementById("feedback-section");
+  const feedbackStrengths = document.getElementById("feedback-strengths");
+  const feedbackImprovements = document.getElementById("feedback-improvements");
+  const feedbackExample = document.getElementById("feedback-example");
+  const nextBtnContainer = document.getElementById("next-btn-container");
+  const nextBtn = document.getElementById("next-question-btn");
+
+  const role = getJSON("cc_selected_role", null);
+  if (!role) {
+    loadingEl.style.display = "none";
+    errorEl.textContent = "No role selected. Please go back and choose a role.";
+    errorEl.style.display = "block";
+    return;
+  }
+
+  const TOTAL_QUESTIONS = 5;
+  let questionNumber = 1;
+  let currentQuestion = "";
+  const previousQA = [];   // for /interview/question repetition-avoidance
+  const sessionQA = [];    // for /interview/summary, includes scores
+
+  function updateProgressUI() {
+    questionCounter.textContent = `Question ${questionNumber} of ${TOTAL_QUESTIONS}`;
+    progressDots.textContent = "●".repeat(questionNumber - 1) + "○".repeat(TOTAL_QUESTIONS - questionNumber + 1);
+  }
+
+  function updateReadinessBadge() {
+    if (sessionQA.length === 0) {
+      readinessBadge.style.display = "none";
+      return;
+    }
+    const avg = sessionQA.reduce((sum, qa) => sum + qa.score, 0) / sessionQA.length;
+    const pct = Math.round(avg * 10);
+    readinessBadge.textContent = `Readiness: ${pct}%`;
+    readinessBadge.style.display = "inline-flex";
+    readinessBadge.className = pct >= 70 ? "badge badge-success" : pct >= 40 ? "badge badge-warning" : "badge badge-danger";
+  }
+
+  async function loadQuestion() {
+    loadingEl.style.display = "block";
+    errorEl.style.display = "none";
+    activeEl.style.display = "none";
+    feedbackSection.style.display = "none";
+    nextBtnContainer.style.display = "none";
+    answerInput.value = "";
+    answerInput.disabled = false;
+    submitBtn.disabled = false;
+    submitBtn.style.display = "inline-block";
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/interview/question`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ role, questionNumber, previousQA }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Failed to load question.");
+
+      currentQuestion = data.question;
+      questionText.textContent = currentQuestion;
+      updateProgressUI();
+
+      loadingEl.style.display = "none";
+      activeEl.style.display = "block";
+    } catch (err) {
+      console.error("Question fetch failed:", err);
+      loadingEl.style.display = "none";
+      errorEl.textContent = "Could not load the next question. Please refresh to try again.";
+      errorEl.style.display = "block";
+    }
+  }
+
+  async function submitAnswer() {
+    const answer = answerInput.value.trim();
+    if (!answer) {
+      alert("Please write an answer before submitting.");
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Evaluating...";
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/interview/evaluate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ role, question: currentQuestion, answer }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Evaluation failed.");
+
+      // Record for both the next-question repetition check and the final summary
+      previousQA.push({ question: currentQuestion, answer });
+      sessionQA.push({ question: currentQuestion, answer, score: data.score });
+
+      renderFeedback(data);
+      updateReadinessBadge();
+
+      answerInput.disabled = true;
+      submitBtn.style.display = "none";
+      nextBtnContainer.style.display = "block";
+      nextBtn.textContent = questionNumber === TOTAL_QUESTIONS ? "Finish Interview →" : "Next Question →";
+    } catch (err) {
+      console.error("Evaluate failed:", err);
+      alert("Could not evaluate your answer. Please try submitting again.");
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit Answer";
+    }
+  }
+
+  function renderFeedback(data) {
+    feedbackStrengths.innerHTML = data.strengths.map((s) => `<li>${s}</li>`).join("");
+    feedbackImprovements.innerHTML = data.improvements.map((s) => `<li>${s}</li>`).join("");
+    feedbackExample.textContent = data.strongerExample;
+    feedbackSection.style.display = "block";
+    submitBtn.textContent = "Submit Answer"; // reset for next round
+  }
+
+  async function finishInterview() {
+    activeEl.style.display = "none";
+    loadingEl.textContent = "Generating your final summary...";
+    loadingEl.style.display = "block";
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/interview/summary`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ role, sessionQA }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Summary generation failed.");
+
+      // Save completed session to history (schema: docs/SCHEMA.md)
+      const history = getJSON("cc_interview_history", []);
+      history.push({
+        id: `sess_${Date.now()}`,
+        role,
+        date: new Date().toISOString(),
+        score: data.averageScore,
+        questionScores: sessionQA.map((qa) => qa.score),
+        recommendedTopics: data.recommendedTopics,
+      });
+      setJSON("cc_interview_history", history);
+
+      renderSummary(data);
+      loadingEl.style.display = "none";
+      summaryEl.style.display = "block";
+    } catch (err) {
+      console.error("Summary fetch failed:", err);
+      loadingEl.style.display = "none";
+      errorEl.textContent = "Could not generate your summary. Your answers were recorded — please refresh to try finishing again.";
+      errorEl.style.display = "block";
+    }
+  }
+
+  function renderSummary(data) {
+    document.getElementById("final-score").textContent = `${data.averageScore}%`;
+    document.getElementById("overall-feedback").textContent = data.overallFeedback;
+    const topicsEl = document.getElementById("recommended-topics");
+    topicsEl.innerHTML = "";
+    data.recommendedTopics.forEach((topic) => {
+      const span = document.createElement("span");
+      span.className = "badge badge-warning";
+      span.textContent = topic;
+      topicsEl.appendChild(span);
+    });
+  }
+
+  submitBtn.addEventListener("click", submitAnswer);
+  nextBtn.addEventListener("click", () => {
+    if (questionNumber === TOTAL_QUESTIONS) {
+      finishInterview();
+    } else {
+      questionNumber += 1;
+      loadQuestion();
+    }
+  });
+
+  loadQuestion();
+}
+
+initInterview();
