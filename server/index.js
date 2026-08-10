@@ -22,6 +22,9 @@ app.get("/api/health", (req, res) => {
 const roadmapRouter = require("./routes/roadmap");
 app.use("/api", roadmapRouter);
 
+const interviewRouter = require("./routes/interview");
+app.use("/api", interviewRouter);
+
 // Temporary Gemini test route (from Day 3 — kept for now, removed Day 6)
 const testGeminiRouter = require("./routes/testGemini");
 app.use("/api", testGeminiRouter);
