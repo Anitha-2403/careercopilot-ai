@@ -11,7 +11,7 @@ const {
   VALID_ROLES,
 } = require("../prompts/interviewPrompts");
 
-const GEMINI_MODEL = "gemini-2.5-flash-lite";
+const GEMINI_MODEL = "gemini-3.1-flash-lite";
 const MAX_ANSWER_LENGTH = 2000;
 
 function stripCodeFences(text) {
