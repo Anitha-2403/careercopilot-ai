@@ -2,7 +2,7 @@
 // Shared logic across all CareerCopilot AI pages.
 // Each section below is guarded so this one file works safely on every page.
 
-const BACKEND_URL = "https://careercopilot-ai-a4jd.onrender.com";
+const BACKEND_URL = " https://careercopilat-ai.netlify.app/";
 
 const ROLES = [
   "AI/ML Engineer Intern",
