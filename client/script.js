@@ -83,7 +83,6 @@ function initRoleSelect() {
       return;
     }
     setJSON("cc_selected_role", selectedRole);
-    // Starting a new role means starting a fresh roadmap/interview cycle for it.
     const prefs = getJSON("cc_user_preferences", {});
     prefs.lastViewedRole = selectedRole;
     setJSON("cc_user_preferences", prefs);
@@ -185,8 +184,14 @@ function renderRoadmap(role, roadmap) {
     });
 
     const textDiv = document.createElement("div");
-    textDiv.innerHTML = `<strong style="color: var(--color-text);">${index + 1}. ${item.step}</strong>
-      <p style="color: var(--color-muted); font-size: 14px; margin-top: 4px;">${item.description}</p>`;
+    const stepStrong = document.createElement("strong");
+    stepStrong.style.color = "var(--color-text)";
+    stepStrong.textContent = `${index + 1}. ${item.step}`;
+    const descP = document.createElement("p");
+    descP.style.cssText = "color: var(--color-muted); font-size: 14px; margin-top: 4px;";
+    descP.textContent = item.description;
+    textDiv.appendChild(stepStrong);
+    textDiv.appendChild(descP);
 
     card.appendChild(checkbox);
     card.appendChild(textDiv);
@@ -200,8 +205,14 @@ function renderRoadmap(role, roadmap) {
   roadmap.resources.forEach((res) => {
     const card = document.createElement("div");
     card.className = "card";
-    card.innerHTML = `<strong style="color: var(--color-navy);">${res.title}</strong>
-      <p style="color: var(--color-muted); font-size: 14px; margin-top: 6px;">${res.description}</p>`;
+    const titleStrong = document.createElement("strong");
+    titleStrong.style.color = "var(--color-navy)";
+    titleStrong.textContent = res.title;
+    const descP = document.createElement("p");
+    descP.style.cssText = "color: var(--color-muted); font-size: 14px; margin-top: 6px;";
+    descP.textContent = res.description;
+    card.appendChild(titleStrong);
+    card.appendChild(descP);
     resourcesEl.appendChild(card);
   });
 }
@@ -217,7 +228,7 @@ function initInterview() {
   const errorEl = document.getElementById("interview-error");
   const activeEl = document.getElementById("interview-active");
   const summaryEl = document.getElementById("interview-summary");
-  if (!loadingEl || !activeEl) return; // not on this page
+  if (!loadingEl || !activeEl) return;
 
   const readinessBadge = document.getElementById("readiness-badge");
   const questionCounter = document.getElementById("question-counter");
@@ -243,8 +254,8 @@ function initInterview() {
   const TOTAL_QUESTIONS = 5;
   let questionNumber = 1;
   let currentQuestion = "";
-  const previousQA = [];   // for /interview/question repetition-avoidance
-  const sessionQA = [];    // for /interview/summary, includes scores
+  const previousQA = [];
+  const sessionQA = [];
 
   function updateProgressUI() {
     questionCounter.textContent = `Question ${questionNumber} of ${TOTAL_QUESTIONS}`;
@@ -316,7 +327,6 @@ function initInterview() {
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || "Evaluation failed.");
 
-      // Record for both the next-question repetition check and the final summary
       previousQA.push({ question: currentQuestion, answer });
       sessionQA.push({ question: currentQuestion, answer, score: data.score });
 
@@ -336,11 +346,23 @@ function initInterview() {
   }
 
   function renderFeedback(data) {
-    feedbackStrengths.innerHTML = data.strengths.map((s) => `<li>${s}</li>`).join("");
-    feedbackImprovements.innerHTML = data.improvements.map((s) => `<li>${s}</li>`).join("");
+    feedbackStrengths.innerHTML = "";
+    data.strengths.forEach((s) => {
+      const li = document.createElement("li");
+      li.textContent = s;
+      feedbackStrengths.appendChild(li);
+    });
+
+    feedbackImprovements.innerHTML = "";
+    data.improvements.forEach((s) => {
+      const li = document.createElement("li");
+      li.textContent = s;
+      feedbackImprovements.appendChild(li);
+    });
+
     feedbackExample.textContent = data.strongerExample;
     feedbackSection.style.display = "block";
-    submitBtn.textContent = "Submit Answer"; // reset for next round
+    submitBtn.textContent = "Submit Answer";
   }
 
   async function finishInterview() {
@@ -357,7 +379,6 @@ function initInterview() {
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || "Summary generation failed.");
 
-      // Save completed session to history (schema: docs/SCHEMA.md)
       const history = getJSON("cc_interview_history", []);
       history.push({
         id: `sess_${Date.now()}`,
@@ -407,3 +428,132 @@ function initInterview() {
 }
 
 initInterview();
+
+// ==========================================================================
+// PAGE: dashboard.html — read all localStorage data, render real progress
+// ==========================================================================
+
+function initDashboard() {
+  const emptyStateEl = document.getElementById("dash-empty-state");
+  const summaryCardsEl = document.getElementById("dash-summary-cards");
+  const historySectionEl = document.getElementById("dash-history-section");
+  const quickActionsEl = document.getElementById("dash-quick-actions");
+  if (!emptyStateEl) return; // not on this page
+
+  const history = getJSON("cc_interview_history", []);
+
+  if (history.length === 0) {
+    emptyStateEl.style.display = "block";
+    summaryCardsEl.style.display = "none";
+    historySectionEl.style.display = "none";
+    quickActionsEl.style.display = "none";
+    // Learning progress can still exist even with zero completed interviews
+    // (a user might explore a roadmap before ever starting an interview),
+    // so we still render it inside the (hidden) summary card in case they
+    // navigate here again after adding roadmap progress. No action needed
+    // here since summaryCardsEl stays hidden until an interview exists.
+    return;
+  }
+
+  emptyStateEl.style.display = "none";
+  summaryCardsEl.style.display = "grid";
+  historySectionEl.style.display = "block";
+  quickActionsEl.style.display = "flex";
+
+  renderReadinessScore(history);
+  renderHistoryTable(history);
+  renderLearningProgress();
+}
+
+function renderReadinessScore(history) {
+  const scoreEl = document.getElementById("dash-readiness-score");
+  const subEl = document.getElementById("dash-readiness-sub");
+
+  const avg = Math.round(history.reduce((sum, s) => sum + s.score, 0) / history.length);
+  scoreEl.textContent = `${avg}%`;
+  subEl.textContent = `avg, ${history.length} session${history.length === 1 ? "" : "s"}`;
+}
+
+function renderHistoryTable(history) {
+  const bodyEl = document.getElementById("dash-history-body");
+  bodyEl.innerHTML = "";
+
+  // Most recent first
+  const sorted = [...history].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  sorted.forEach((session) => {
+    const tr = document.createElement("tr");
+    tr.style.borderTop = "1px solid var(--color-border)";
+
+    const dateTd = document.createElement("td");
+    dateTd.style.cssText = "padding: 14px 20px; font-size: 14px;";
+    dateTd.textContent = new Date(session.date).toLocaleDateString(undefined, { month: "short", day: "numeric" });
+
+    const roleTd = document.createElement("td");
+    roleTd.style.cssText = "padding: 14px 20px; font-size: 14px;";
+    roleTd.textContent = session.role;
+
+    const scoreTd = document.createElement("td");
+    scoreTd.style.padding = "14px 20px";
+    const badge = document.createElement("span");
+    badge.className = session.score >= 70 ? "badge badge-success" : session.score >= 40 ? "badge badge-warning" : "badge badge-danger";
+    badge.textContent = `${session.score}%`;
+    scoreTd.appendChild(badge);
+
+    tr.appendChild(dateTd);
+    tr.appendChild(roleTd);
+    tr.appendChild(scoreTd);
+    bodyEl.appendChild(tr);
+  });
+}
+
+function renderLearningProgress() {
+  const noRoadmapEl = document.getElementById("dash-progress-no-roadmap");
+  const progressContentEl = document.getElementById("dash-progress-content");
+  const roleSelectEl = document.getElementById("dash-role-select");
+
+  // Find every role the user has roadmap progress for by scanning localStorage keys.
+  const rolesWithProgress = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith("cc_roadmap_progress_")) {
+      rolesWithProgress.push(key.replace("cc_roadmap_progress_", ""));
+    }
+  }
+
+  if (rolesWithProgress.length === 0) {
+    noRoadmapEl.style.display = "block";
+    progressContentEl.style.display = "none";
+    return;
+  }
+
+  noRoadmapEl.style.display = "none";
+  progressContentEl.style.display = "block";
+
+  const prefs = getJSON("cc_user_preferences", {});
+  const defaultRole = rolesWithProgress.includes(prefs.lastViewedRole) ? prefs.lastViewedRole : rolesWithProgress[0];
+
+  roleSelectEl.innerHTML = "";
+  rolesWithProgress.forEach((role) => {
+    const option = document.createElement("option");
+    option.value = role;
+    option.textContent = role;
+    if (role === defaultRole) option.selected = true;
+    roleSelectEl.appendChild(option);
+  });
+
+  function renderForRole(role) {
+    const progress = getJSON(`cc_roadmap_progress_${role}`, { completedSteps: [], totalSteps: 0 });
+    const total = progress.totalSteps || 0;
+    const completed = progress.completedSteps.length;
+    const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+    document.getElementById("dash-progress-fill").style.width = `${pct}%`;
+    document.getElementById("dash-progress-text").textContent = `${completed} of ${total} milestones complete`;
+  }
+
+  roleSelectEl.addEventListener("change", () => renderForRole(roleSelectEl.value));
+  renderForRole(defaultRole);
+}
+
+initDashboard();
