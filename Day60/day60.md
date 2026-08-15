@@ -22,15 +22,15 @@ Dashboard, Coding Practice, Aptitude Hub, Interview Prep, Resume Master, Company
 - **Day 10:** Full five-lens review (Engineer, PM, UX, Recruiter, OSS Maintainer); added LICENSE, README, favicon, and SEO/social metadata; tagged v1.0.0
 
 ## Graduation Documentation Produced
-- future-scope.md
-- challenge-retrospective.md
-- 30-day-growth-plan.md
-- daily-build-prompt.md
-- graduation-reflection.md
-- key-learnings.md
-- 60-day-skills-infographic.html
-- certificate-of-completion.html
-- farewell-message.md
+- `future-scope.md`
+- `challenge-retrospective.md`
+- `30-day-growth-plan.md`
+- `daily-build-prompt.md`
+- `graduation-reflection.md`
+- `key-learnings.md`
+- `60-day-skills-infographic.html`
+- `certificate-of-completion.html`
+- `farewell-message.md`
 
 ## Status
-Capstone complete. v1.0.0 released. Graduation artifacts complete and ready for the AB Talks Day60 submission folder.
+Capstone complete. v1.0.0 released. Graduation artifacts complete and ready for the AB Talks `Day60` submission folder.
