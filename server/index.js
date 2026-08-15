@@ -5,9 +5,26 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const allowedOrigins = [
+  "https://careercopilot-ai.netlify.app",
+  "http://127.0.0.1:5500",
+  "http://localhost:5500",
+];
+
 app.use(
   cors({
-    origin: "https://careercopilot-ai.netlify.app",
+    origin: function (origin, callback) {
+      // Allow requests without an Origin header
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
+    },
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
