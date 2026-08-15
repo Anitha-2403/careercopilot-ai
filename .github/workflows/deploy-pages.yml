@@ -28,7 +28,7 @@ jobs:
 
       - name: Prepare frontend
         run: |
-          mkdir _site
+          mkdir -p _site
           cp -r client/* _site/
 
       - name: Upload frontend
