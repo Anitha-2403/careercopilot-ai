@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Certificate of Completion — Anitha</title>
+<style>
+  @page{ size:A4 landscape; margin:0; }
+  :root{
+    --navy:#1A2B4C;
+    --navy-deep:#0F1B33;
+    --paper:#FBFAF6;
+    --amber:#C98A2C;
+    --line:#C9BE9C;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{ height:100%; }
+  body{
+    background:#E9E6DD;
+    font-family:'Georgia','Iowan Old Style',serif;
+    color:var(--navy-deep);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  .cert{
+    width:1100px;
+    max-width:100%;
+    aspect-ratio:1.414/1;
+    background:var(--paper);
+    border:1px solid var(--line);
+    position:relative;
+    padding:56px 72px;
+    display:flex;
+    flex-direction:column;
+  }
+  .cert::before{
+    content:"";
+    position:absolute;
+    inset:16px;
+    border:1px solid var(--navy);
+    pointer-events:none;
+  }
+  .top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-bottom:8px;
+  }
+  .logo-slot{
+    width:64px;
+    height:64px;
+    border:1px dashed var(--line);
+    border-radius:6px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:Helvetica,Arial,sans-serif;
+    font-size:9px;
+    text-align:center;
+    color:#9A9382;
+    line-height:1.3;
+    padding:4px;
+  }
+  .brand{
+    font-family:Helvetica,Arial,sans-serif;
+    letter-spacing:.22em;
+    font-size:11px;
+    text-transform:uppercase;
+    color:var(--navy);
+    text-align:right;
+  }
+  .brand span{ display:block; color:var(--amber); font-size:9px; letter-spacing:.18em; margin-top:4px; }
+
+  .body{
+    flex:1;
+    text-align:center;
+    padding-top:18px;
+  }
+  .eyebrow{
+    font-family:Helvetica,Arial,sans-serif;
+    letter-spacing:.3em;
+    font-size:11px;
+    text-transform:uppercase;
+    color:var(--amber);
+    margin-bottom:18px;
+  }
+  h1{
+    font-size:34px;
+    font-weight:400;
+    color:var(--navy);
+    margin-bottom:22px;
+  }
+  .presented{
+    font-family:Helvetica,Arial,sans-serif;
+    font-size:12.5px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:#6B6455;
+    margin-bottom:8px;
+  }
+  .name{
+    font-size:40px;
+    color:var(--navy-deep);
+    border-bottom:1px solid var(--line);
+    display:inline-block;
+    padding:0 30px 10px;
+    margin-bottom:22px;
+  }
+  .desc{
+    max-width:640px;
+    margin:0 auto 20px;
+    font-size:15px;
+    line-height:1.75;
+    color:#3A3527;
+  }
+  .desc b{ color:var(--navy); font-weight:400; font-style:italic; }
+  .meta{
+    font-family:Helvetica,Arial,sans-serif;
+    font-size:12px;
+    color:#6B6455;
+    margin-top:6px;
+  }
+  .meta a{ color:var(--navy); text-decoration:none; border-bottom:1px solid var(--line); }
+
+  .bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    padding-top:26px;
+    border-top:1px solid var(--line);
+    margin-top:auto;
+  }
+  .sig{
+    text-align:center;
+    min-width:180px;
+  }
+  .sig .line{
+    border-top:1px solid var(--navy-deep);
+    margin-bottom:6px;
+    padding-top:6px;
+    font-family:'Georgia',serif;
+    font-style:italic;
+    font-size:15px;
+  }
+  .sig .role{
+    font-family:Helvetica,Arial,sans-serif;
+    font-size:10px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:#6B6455;
+  }
+  .links{
+    font-family:Helvetica,Arial,sans-serif;
+    font-size:10.5px;
+    color:#6B6455;
+    text-align:right;
+  }
+  .links a{ color:var(--navy); text-decoration:none; }
+  .links div{ margin-bottom:4px; }
+
+  @media print{
+    body{ background:none; padding:0; }
+    .cert{ border:none; }
+  }
+</style>
+</head>
+<body>
+  <div class="cert">
+    <div class="top">
+      <svg class="logo-slot" viewBox="0 0 120 120" style="border:none;padding:0;">
+        <rect x="2" y="2" width="116" height="116" rx="16" fill="#1A2B4C" stroke="#C98A2C" stroke-width="2"/>
+        <text x="60" y="70" font-family="Georgia, 'Iowan Old Style', serif" font-weight="400" font-size="46" fill="#FBFAF6" text-anchor="middle">AB</text>
+        <line x1="30" y1="82" x2="90" y2="82" stroke="#C98A2C" stroke-width="1.5"/>
+        <text x="60" y="98" font-family="Helvetica, Arial, sans-serif" font-size="9" letter-spacing="2" fill="#C98A2C" text-anchor="middle">TALKS</text>
+      </svg>
+      <div class="brand">AB Talks<span>60-Day Claude AI Challenge</span></div>
+    </div>
+
+    <div class="body">
+      <div class="eyebrow">Certificate of Completion</div>
+      <h1>10-Day Capstone Sprint</h1>
+      <div class="presented">This certifies that</div>
+      <div class="name">Anitha</div>
+      <p class="desc">
+        has successfully designed, built, and deployed <b>CareerCopilot AI</b>, Version <b>v1.0.0</b> —
+        a production career-preparation web application with a React frontend and Express backend —
+        as the capstone project of the AB Talks 60-Day Claude AI Challenge.
+      </p>
+      <div class="meta">Repository: <a href="https://github.com/Anitha-2403/careercopilot-ai">github.com/Anitha-2403/careercopilot-ai</a></div>
+      <div class="meta">Completed: 15 August 2026</div>
+    </div>
+
+    <div class="bottom">
+      <div class="sig">
+        <div class="line">Claude</div>
+        <div class="role">AI Mentor &amp; Co-Creator (Free Tier)</div>
+      </div>
+      <div class="links">
+        <div><a href="https://www.abtalks.in/">www.abtalks.in</a></div>
+        <div><a href="https://www.linkedin.com/company/abtalks-on-ai/">linkedin.com/company/abtalks-on-ai</a></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

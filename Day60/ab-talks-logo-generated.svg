@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <rect x="2" y="2" width="116" height="116" rx="16" fill="#1A2B4C" stroke="#C98A2C" stroke-width="2"/>
+  <text x="60" y="70" font-family="Georgia, 'Iowan Old Style', serif" font-weight="400" font-size="46" fill="#FBFAF6" text-anchor="middle">AB</text>
+  <line x1="30" y1="82" x2="90" y2="82" stroke="#C98A2C" stroke-width="1.5"/>
+  <text x="60" y="98" font-family="Helvetica, Arial, sans-serif" font-size="9" letter-spacing="2" fill="#C98A2C" text-anchor="middle">TALKS</text>
+</svg>
