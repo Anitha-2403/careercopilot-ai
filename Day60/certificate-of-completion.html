@@ -2,200 +2,701 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Certificate of Completion — Anitha</title>
+
+<title>60 Days — CareerCopilot AI</title>
+
 <style>
-  @page{ size:A4 landscape; margin:0; }
-  :root{
-    --navy:#1A2B4C;
-    --navy-deep:#0F1B33;
-    --paper:#FBFAF6;
-    --amber:#C98A2C;
-    --line:#C9BE9C;
+  :root {
+    --navy: #1A2B4C;
+    --navy-deep: #0F1B33;
+    --paper: #F7F5F0;
+    --amber: #C98A2C;
+    --slate: #5B6478;
+    --line: #DAD5C8;
   }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  html,body{ height:100%; }
-  body{
-    background:#E9E6DD;
-    font-family:'Georgia','Iowan Old Style',serif;
-    color:var(--navy-deep);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:24px;
-  }
-  .cert{
-    width:1100px;
-    max-width:100%;
-    aspect-ratio:1.414/1;
-    background:var(--paper);
-    border:1px solid var(--line);
-    position:relative;
-    padding:56px 72px;
-    display:flex;
-    flex-direction:column;
-  }
-  .cert::before{
-    content:"";
-    position:absolute;
-    inset:16px;
-    border:1px solid var(--navy);
-    pointer-events:none;
-  }
-  .top{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding-bottom:8px;
-  }
-  .logo-slot{
-    width:64px;
-    height:64px;
-    border:1px dashed var(--line);
-    border-radius:6px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-family:Helvetica,Arial,sans-serif;
-    font-size:9px;
-    text-align:center;
-    color:#9A9382;
-    line-height:1.3;
-    padding:4px;
-  }
-  .brand{
-    font-family:Helvetica,Arial,sans-serif;
-    letter-spacing:.22em;
-    font-size:11px;
-    text-transform:uppercase;
-    color:var(--navy);
-    text-align:right;
-  }
-  .brand span{ display:block; color:var(--amber); font-size:9px; letter-spacing:.18em; margin-top:4px; }
 
-  .body{
-    flex:1;
-    text-align:center;
-    padding-top:18px;
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
-  .eyebrow{
-    font-family:Helvetica,Arial,sans-serif;
-    letter-spacing:.3em;
-    font-size:11px;
-    text-transform:uppercase;
-    color:var(--amber);
-    margin-bottom:18px;
-  }
-  h1{
-    font-size:34px;
-    font-weight:400;
-    color:var(--navy);
-    margin-bottom:22px;
-  }
-  .presented{
-    font-family:Helvetica,Arial,sans-serif;
-    font-size:12.5px;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    color:#6B6455;
-    margin-bottom:8px;
-  }
-  .name{
-    font-size:40px;
-    color:var(--navy-deep);
-    border-bottom:1px solid var(--line);
-    display:inline-block;
-    padding:0 30px 10px;
-    margin-bottom:22px;
-  }
-  .desc{
-    max-width:640px;
-    margin:0 auto 20px;
-    font-size:15px;
-    line-height:1.75;
-    color:#3A3527;
-  }
-  .desc b{ color:var(--navy); font-weight:400; font-style:italic; }
-  .meta{
-    font-family:Helvetica,Arial,sans-serif;
-    font-size:12px;
-    color:#6B6455;
-    margin-top:6px;
-  }
-  .meta a{ color:var(--navy); text-decoration:none; border-bottom:1px solid var(--line); }
 
-  .bottom{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
-    padding-top:26px;
-    border-top:1px solid var(--line);
-    margin-top:auto;
-  }
-  .sig{
-    text-align:center;
-    min-width:180px;
-  }
-  .sig .line{
-    border-top:1px solid var(--navy-deep);
-    margin-bottom:6px;
-    padding-top:6px;
-    font-family:'Georgia',serif;
-    font-style:italic;
-    font-size:15px;
-  }
-  .sig .role{
-    font-family:Helvetica,Arial,sans-serif;
-    font-size:10px;
-    letter-spacing:.1em;
-    text-transform:uppercase;
-    color:#6B6455;
-  }
-  .links{
-    font-family:Helvetica,Arial,sans-serif;
-    font-size:10.5px;
-    color:#6B6455;
-    text-align:right;
-  }
-  .links a{ color:var(--navy); text-decoration:none; }
-  .links div{ margin-bottom:4px; }
+  body {
+    background: var(--paper);
 
-  @media print{
-    body{ background:none; padding:0; }
-    .cert{ border:none; }
+    font-family: 'Georgia', 'Iowan Old Style', serif;
+
+    color: var(--navy-deep);
+
+    padding: 0 0 80px;
   }
+
+  /* =========================
+     HEADER
+     ========================= */
+
+  header {
+    background: var(--navy);
+
+    color: var(--paper);
+
+    padding: 42px 40px 56px;
+
+    text-align: center;
+
+    position: relative;
+  }
+
+  /* AB TALKS LOGO */
+
+  .logo-container {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    margin-bottom: 24px;
+  }
+
+  .logo-container img {
+    width: 150px;
+
+    max-width: 80%;
+
+    height: auto;
+
+    max-height: 70px;
+
+    object-fit: contain;
+
+    display: block;
+  }
+
+  header .eyebrow {
+    font-family: Helvetica, Arial, sans-serif;
+
+    letter-spacing: .28em;
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    color: var(--amber);
+
+    margin-bottom: 18px;
+  }
+
+  header h1 {
+    font-size: 44px;
+
+    font-weight: 400;
+
+    line-height: 1.15;
+
+    max-width: 720px;
+
+    margin: 0 auto 14px;
+  }
+
+  header p {
+    font-family: Helvetica, Arial, sans-serif;
+
+    color: #C7CCDA;
+
+    font-size: 15px;
+
+    max-width: 520px;
+
+    margin: 0 auto;
+
+    line-height: 1.6;
+  }
+
+
+  /* =========================
+     TIMELINE
+     ========================= */
+
+  .rail {
+    max-width: 760px;
+
+    margin: 0 auto;
+
+    padding: 60px 40px 0;
+
+    position: relative;
+  }
+
+  .rail::before {
+    content: "";
+
+    position: absolute;
+
+    left: 59px;
+
+    top: 8px;
+
+    bottom: 40px;
+
+    width: 1px;
+
+    background: var(--line);
+  }
+
+  .stage {
+    position: relative;
+
+    padding-left: 100px;
+
+    margin-bottom: 46px;
+  }
+
+  .stage .week {
+    position: absolute;
+
+    left: 0;
+
+    top: 0;
+
+    width: 100px;
+
+    text-align: right;
+
+    padding-right: 36px;
+
+    font-family: Helvetica, Arial, sans-serif;
+
+    font-size: 11px;
+
+    letter-spacing: .12em;
+
+    color: var(--slate);
+
+    text-transform: uppercase;
+  }
+
+  .stage .dot {
+    position: absolute;
+
+    left: 56px;
+
+    top: 2px;
+
+    width: 7px;
+
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--amber);
+
+    box-shadow: 0 0 0 4px var(--paper);
+  }
+
+  .stage h3 {
+    font-size: 21px;
+
+    font-weight: 400;
+
+    margin-bottom: 6px;
+
+    color: var(--navy);
+  }
+
+  .stage p {
+    font-family: Helvetica, Arial, sans-serif;
+
+    font-size: 14px;
+
+    line-height: 1.65;
+
+    color: #3A4256;
+
+    max-width: 520px;
+  }
+
+
+  /* =========================
+     CAPSTONE CARD
+     ========================= */
+
+  .capstone {
+    margin: 70px auto 0;
+
+    max-width: 760px;
+
+    padding: 0 40px;
+  }
+
+  .capstone .card {
+    background: var(--navy);
+
+    color: var(--paper);
+
+    border-radius: 2px;
+
+    padding: 44px 44px 40px;
+
+    position: relative;
+
+    overflow: hidden;
+  }
+
+  .capstone .card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    right: 0;
+
+    height: 3px;
+
+    background: var(--amber);
+  }
+
+  .capstone .eyebrow {
+    font-family: Helvetica, Arial, sans-serif;
+
+    letter-spacing: .24em;
+
+    font-size: 10.5px;
+
+    text-transform: uppercase;
+
+    color: var(--amber);
+
+    margin-bottom: 14px;
+  }
+
+  .capstone h2 {
+    font-size: 28px;
+
+    font-weight: 400;
+
+    margin-bottom: 14px;
+  }
+
+  .capstone p {
+    font-family: Helvetica, Arial, sans-serif;
+
+    font-size: 14.5px;
+
+    line-height: 1.7;
+
+    color: #C7CCDA;
+
+    max-width: 600px;
+
+    margin-bottom: 22px;
+  }
+
+  .stack {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+  }
+
+  .stack span {
+    font-family: Helvetica, Arial, sans-serif;
+
+    font-size: 12px;
+
+    border: 1px solid #3A4668;
+
+    color: #DCE0EA;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+  }
+
+
+  /* =========================
+     FOOTER
+     ========================= */
+
+  footer {
+    text-align: center;
+
+    margin-top: 56px;
+
+    font-family: Helvetica, Arial, sans-serif;
+
+    font-size: 12px;
+
+    color: var(--slate);
+
+    letter-spacing: .04em;
+  }
+
+
+  /* =========================
+     MOBILE
+     ========================= */
+
+  @media (max-width: 700px) {
+
+    header {
+      padding: 35px 25px 45px;
+    }
+
+    header h1 {
+      font-size: 34px;
+    }
+
+    header p {
+      font-size: 14px;
+    }
+
+    .logo-container img {
+      width: 120px;
+      max-height: 60px;
+    }
+
+    .rail {
+      padding-left: 20px;
+
+      padding-right: 20px;
+    }
+
+    .rail::before {
+      left: 20px;
+    }
+
+    .stage {
+      padding-left: 50px;
+    }
+
+    .stage .week {
+      display: none;
+    }
+
+    .stage .dot {
+      left: 17px;
+    }
+
+    .capstone {
+      padding: 0 20px;
+    }
+
+    .capstone .card {
+      padding: 35px 25px;
+    }
+  }
+
+
+  /* =========================
+     PRINT
+     ========================= */
+
+  @media print {
+
+    body {
+      background: white;
+
+      padding: 0;
+    }
+
+    header {
+      break-inside: avoid;
+    }
+
+    .stage,
+    .capstone {
+      break-inside: avoid;
+    }
+  }
+
 </style>
 </head>
+
 <body>
-  <div class="cert">
-    <div class="top">
-      <div class="logo-slot">AB TALKS<br>LOGO HERE</div>
-      <div class="brand">AB Talks<span>60-Day Claude AI Challenge</span></div>
-    </div>
 
-    <div class="body">
-      <div class="eyebrow">Certificate of Completion</div>
-      <h1>10-Day Capstone Sprint</h1>
-      <div class="presented">This certifies that</div>
-      <div class="name">Anitha</div>
-      <p class="desc">
-        has successfully designed, built, and deployed <b>CareerCopilot AI</b>, Version <b>v1.0.0</b> —
-        a production career-preparation web application with a React frontend and Express backend —
-        as the capstone project of the AB Talks 60-Day Claude AI Challenge.
-      </p>
-      <div class="meta">Repository: <a href="https://github.com/Anitha-2403/careercopilot-ai">github.com/Anitha-2403/careercopilot-ai</a></div>
-      <div class="meta">Completed: 15 August 2026</div>
-    </div>
 
-    <div class="bottom">
-      <div class="sig">
-        <div class="line">Claude</div>
-        <div class="role">AI Mentor &amp; Co-Creator (Free Tier)</div>
-      </div>
-      <div class="links">
-        <div><a href="https://www.abtalks.in/">www.abtalks.in</a></div>
-        <div><a href="https://www.linkedin.com/company/abtalks-on-ai/">linkedin.com/company/abtalks-on-ai</a></div>
-      </div>
-    </div>
+<!-- =========================================
+     HEADER
+     ========================================= -->
+
+<header>
+
+  <!-- AB TALKS LOGO -->
+
+  <div class="logo-container">
+
+    <img
+      src="ab-talks-logo.png.svg"
+      alt="AB Talks Logo"
+    >
+
   </div>
+
+
+  <div class="eyebrow">
+    AB Talks · 60-Day Claude AI Challenge
+  </div>
+
+
+  <h1>
+    Sixty days of building, one shipped application at the end
+  </h1>
+
+
+  <p>
+    How each phase of the challenge fed directly into designing,
+    building, debugging, and deploying CareerCopilot AI.
+  </p>
+
+</header>
+
+
+
+<!-- =========================================
+     60-DAY TIMELINE
+     ========================================= -->
+
+<div class="rail">
+
+
+  <!-- STAGE 1 -->
+
+  <div class="stage">
+
+    <div class="week">
+      Weeks 1–2
+    </div>
+
+    <div class="dot"></div>
+
+    <h3>
+      AI Foundations &amp; Prompting
+    </h3>
+
+    <p>
+      Learned how to work with Claude effectively —
+      clear prompts, iterative refinement, and reasoning
+      through problems step by step. This became the
+      working method for the entire challenge, capstone included.
+    </p>
+
+  </div>
+
+
+
+  <!-- STAGE 2 -->
+
+  <div class="stage">
+
+    <div class="week">
+      Weeks 3–4
+    </div>
+
+    <div class="dot"></div>
+
+    <h3>
+      Research &amp; Product Thinking
+    </h3>
+
+    <p>
+      Practiced scoping problems before building —
+      defining what a project should actually do before
+      writing code. Directly shaped how CareerCopilot AI's
+      feature set was scoped without drift.
+    </p>
+
+  </div>
+
+
+
+  <!-- STAGE 3 -->
+
+  <div class="stage">
+
+    <div class="week">
+      Weeks 5–6
+    </div>
+
+    <div class="dot"></div>
+
+    <h3>
+      Automation &amp; Applied AI Projects
+    </h3>
+
+    <p>
+      Built increasingly complex AI-assisted projects,
+      developing the habit of pairing with Claude on real
+      implementation work rather than just conversation.
+    </p>
+
+  </div>
+
+
+
+  <!-- STAGE 4 -->
+
+  <div class="stage">
+
+    <div class="week">
+      Weeks 7–8
+    </div>
+
+    <div class="dot"></div>
+
+    <h3>
+      Systems &amp; Agentic Workflows
+    </h3>
+
+    <p>
+      Explored knowledge systems and multi-step agent
+      workflows — groundwork for architecting a real
+      client/server application with a defined structure
+      rather than an ad hoc script.
+    </p>
+
+  </div>
+
+
+
+  <!-- STAGE 5 -->
+
+  <div class="stage">
+
+    <div class="week">
+      Days 1–8
+    </div>
+
+    <div class="dot"></div>
+
+    <h3>
+      Capstone: Build
+    </h3>
+
+    <p>
+      Ten sections built out — Dashboard, Coding Practice,
+      Aptitude Hub, Interview Prep, Resume Master, Company Prep,
+      Study Planner, Achievements, Analytics, Settings —
+      on a React frontend and Express backend.
+    </p>
+
+  </div>
+
+
+
+  <!-- STAGE 6 -->
+
+  <div class="stage">
+
+    <div class="week">
+      Day 9
+    </div>
+
+    <div class="dot"></div>
+
+    <h3>
+      Capstone: Production Deployment
+    </h3>
+
+    <p>
+      Deployed frontend to Netlify and backend to Render.
+      Diagnosed and fixed a real CORS misconfiguration between
+      the two — the kind of bug only production surfaces.
+    </p>
+
+  </div>
+
+
+
+  <!-- STAGE 7 -->
+
+  <div class="stage">
+
+    <div class="week">
+      Day 10
+    </div>
+
+    <div class="dot"></div>
+
+    <h3>
+      Capstone: Final Review &amp; Polish
+    </h3>
+
+    <p>
+      Full five-lens review — Engineer, PM, UX, Recruiter,
+      and Open Source Maintainer. Closed out documentation,
+      project metadata, and production-readiness gaps before
+      tagging v1.0.0.
+    </p>
+
+  </div>
+
+</div>
+
+
+
+<!-- =========================================
+     CAPSTONE RESULT
+     ========================================= -->
+
+<div class="capstone">
+
+  <div class="card">
+
+    <div class="eyebrow">
+      Day 60 — Capstone Result
+    </div>
+
+
+    <h2>
+      CareerCopilot AI, v1.0.0
+    </h2>
+
+
+    <p>
+      A deployed career-preparation web application —
+      the outcome that validates sixty days of learning,
+      not the point of it.
+    </p>
+
+
+    <div class="stack">
+
+      <span>React</span>
+
+      <span>Express</span>
+
+      <span>Netlify</span>
+
+      <span>Render</span>
+
+      <span>Production CORS Config</span>
+
+      <span>API Health Check</span>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- =========================================
+     FOOTER
+     ========================================= -->
+
+<footer>
+
+  AB Talks · 60-Day Claude AI Challenge
+  · Capstone: CareerCopilot AI
+
+</footer>
+
+
 </body>
 </html>
